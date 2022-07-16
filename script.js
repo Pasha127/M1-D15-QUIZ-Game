@@ -194,13 +194,13 @@ const easyComputerQuestions = [
             questionText.innerText = easyComputerQuestions[questionNumber].question;
             const randVal = rand4();
 
-            let questionArr = easyComputerQuestions[questionNumber].incorrect_answers;
-            let answerArr =[0,1,2,3];
-            let newArr =[];
-            answerArr.splice(randVal,1);
-            for(let i=0;i<questionArr.length;i++){
-                newArr[answerArr[i]] = questionArr[i];
-            }
+            //let questionArr = easyComputerQuestions[questionNumber].incorrect_answers;
+            //let answerArr =[0,1,2,3];
+            //let newArr =[];
+            //answerArr.splice(randVal,1);
+            //for(let i=0;i<questionArr.length;i++){
+            //    newArr[answerArr[i]] = questionArr[i];
+            //}
 
 
 
