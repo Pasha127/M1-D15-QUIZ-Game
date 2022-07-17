@@ -10,10 +10,6 @@
     border: 2px solid black;
     border-radius: 12px;
 }
-.title{
-    
-    
-}
 .titleContainer{
     display: flex;
     position: absolute;    
@@ -53,16 +49,12 @@
     flex-wrap: wrap;
     display: flex;
     background-color: rgb(255, 255, 255);
-    
-    
-   /*  align-items: center; */
 }
 .questionText{
     font-weight: 300;
     font-size: 25pt;
 }
-.option{
-    
+.option{    
     width: 35vw;
     height: 20vh;
     margin: 1%;
@@ -71,8 +63,6 @@
     margin-block: auto;
     display: flex;
     font-size: 30px;
-}
-.option p{
 }
 .option:hover{
     background-color: darkgray;
@@ -105,15 +95,12 @@
     width: 20vw;
     justify-content: center;
     align-items: center;
-
 }
 .restart:hover{
     background-color:darkgrey;
 }
-
 .restart p{
     font-size: 20pt;
-
 }
 .invisible{
     visibility: hidden;

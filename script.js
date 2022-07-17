@@ -156,12 +156,16 @@ const easyComputerQuestions = [
   ];
 
   window.onload = function () {
-    
+    let questionCount = Math.floor(prompt("How many questions would you like? (max 20)"));
+   
+    while(questionCount<1 || questionCount>20 || !questionCount){
+        questionCount = Math.floor(prompt("Please choose an integer number of questions between 1 and 20"));
+        
+    }    
     let pointCount = 0;
-    let currentAnswer = 0;
     let questionNumber = -1;
     const questionText = document.querySelector("#questionText");
-    
+    let question = easyComputerQuestions[questionNumber];
     const replayButton = document.createElement("div");
     replayButton.setAttribute("class","restart");
     
@@ -170,28 +174,26 @@ const easyComputerQuestions = [
         sScreen.setAttribute("class","scoreScreen");        
         const sScreenText = document.createElement('p');
         sScreenText.setAttribute("class","sScreenText");
-        sScreenText.innerText = `Your score: ${pointCount}/${easyComputerQuestions.length}`
+        sScreenText.innerText = `Your score: ${pointCount}/${questionCount}`
         document.body.append(sScreen);
         sScreen.append(sScreenText);
         sScreen.append(replayButton);
         const playAgainText = document.createElement('p');
         playAgainText.innerText = "Try Again";
         replayButton.append(playAgainText);
-
-    }
-    //const rand4 = function (){
-    //    const value = Math.floor(Math.random()*4)
-    //    return value;
-    //}
+    } 
     
-       
     const answerContainer = document.querySelector(".answerContainer");
-    console.log(answerContainer);
+    
     const nextQuestion = function (){
+
+    while (answerContainer.firstChild) {
+        answerContainer.removeChild(answerContainer.firstChild);
+    }        
         questionNumber++;
-        if(questionNumber<easyComputerQuestions.length){
+        if(questionNumber<questionCount){
             questionText.innerText = easyComputerQuestions[questionNumber].question;
-            let question = easyComputerQuestions[questionNumber]
+            question = easyComputerQuestions[questionNumber]
       let allAnswers = []
       allAnswers.push(question.correct_answer)
       allAnswers.push(...question.incorrect_answers)
@@ -211,67 +213,30 @@ const easyComputerQuestions = [
         newOption.setAttribute("class","option border");
         answerContainer.append(newOption);
         newOption.append(newText);
-      }
-           
+      }           
         }else{
             scoreScreen();
         }
-        
-
+        const options = document.querySelectorAll(".option");
+        for(let option of options){
+            if(option.innerText === question.correct_answer){                
+                console.log(`newcorrect`);
+                option.onclick = function(){
+                pointCount++;
+                nextQuestion();
+                indicateRight();
+            }
+        }else{            
+            option.onclick = function(){            
+            nextQuestion();
+            indicateWrong();
+            }            
+        }
     }
-
+    }
 
     nextQuestion();
-
     
-
-    optionA.onclick = function (){
-        console.log("clicka");
-        if(currentAnswer === 0){
-            pointCount++;
-            nextQuestion();
-            indicateRight();
-        }else{
-            nextQuestion();
-            indicateWrong();
-        }
-    }
-    optionB.onclick = function (){
-        console.log("clickb");
-        
-        if(currentAnswer === 1){
-            pointCount++;
-            indicateRight();
-            nextQuestion();
-        }else{
-            nextQuestion();
-            indicateWrong();
-        }
-    }
-    optionC.onclick = function (){
-        console.log("clickc");
-        
-        if(currentAnswer === 2){
-            pointCount++;
-            nextQuestion();
-            indicateRight();
-        }else{
-            nextQuestion();
-            indicateWrong();
-        }
-    }
-    optionD.onclick = function (){
-        console.log("clickd");
-        
-        if(currentAnswer === 3){
-            pointCount++;
-            indicateRight();
-            nextQuestion();
-        }else{
-            indicateWrong();
-            nextQuestion();
-        }
-    }
     const restart = function (){
         window.location.reload();
     }
@@ -285,25 +250,6 @@ const easyComputerQuestions = [
         document.body.style.backgroundColor = "red";
         setTimeout(() => { document.body.style.backgroundColor = "white"; }, 500);
     }
-    
-    
-    
-    
-    
-    
-    // HINTS
-    // IF YOU ARE DISPLAYING ALL THE QUESTIONS AT ONCE:
-    // For each question, create a container for wrapping it; then create a radio button
-    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio
-    // with, as options, both the correct answer and the incorrect ones
-    // (you'll probably need to google how to get the value from a radio button in JS to evaluate the final score)
-    //
-    // IF YOU ARE DISPLAYING ONE QUESTION AT A TIME
-    // Display the first question with the text and the radio buttons
-    // when the user selects an answer, pick the next question from the array and replace the old one with it
-    // saving the user's choice in a variable
   };
 
-  // How to calculate the result? You can do it in 2 ways:
-  // If you are presenting all the questions together, just take all the radio buttons and check if the selected answer === correct_answer
-  // If you are presenting one question at a time, just add one point or not to the user score if the selected answer === correct_answer
+ 
