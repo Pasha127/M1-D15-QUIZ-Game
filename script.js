@@ -164,6 +164,7 @@ const easyComputerQuestions = [
     
     const replayButton = document.createElement("div");
     replayButton.setAttribute("class","restart");
+    
     const scoreScreen = function (){
         const sScreen = document.createElement('div');
         sScreen.setAttribute("class","scoreScreen");        
@@ -178,92 +179,51 @@ const easyComputerQuestions = [
         replayButton.append(playAgainText);
 
     }
-    const rand4 = function (){
-        const value = Math.floor(Math.random()*4)
-        return value;
-    }
+    //const rand4 = function (){
+    //    const value = Math.floor(Math.random()*4)
+    //    return value;
+    //}
     
-    const optionA = document.querySelector("#A");
-    const optionB = document.querySelector("#B");
-    const optionC = document.querySelector("#C");
-    const optionD = document.querySelector("#D");    
-
+       
+    const answerContainer = document.querySelector(".answerContainer");
+    console.log(answerContainer);
     const nextQuestion = function (){
         questionNumber++;
         if(questionNumber<easyComputerQuestions.length){
             questionText.innerText = easyComputerQuestions[questionNumber].question;
-            const randVal = rand4();
+            let question = easyComputerQuestions[questionNumber]
+      let allAnswers = []
+      allAnswers.push(question.correct_answer)
+      allAnswers.push(...question.incorrect_answers)
 
-            //let questionArr = easyComputerQuestions[questionNumber].incorrect_answers;
-            //let answerArr =[0,1,2,3];
-            //let newArr =[];
-            //answerArr.splice(randVal,1);
-            //for(let i=0;i<questionArr.length;i++){
-            //    newArr[answerArr[i]] = questionArr[i];
-            //}
+      let answersIndex = []
+      for (let i = 0; i < allAnswers.length; i++) {
+        answersIndex.push(i)
+      }
+      for (let i = 0; i < allAnswers.length; i++) {
+        let randomIndex = Math.floor(Math.random() * answersIndex.length)
+        let randomAnwserIndex = answersIndex.splice(randomIndex, 1)[0]
+        let randomAnwser = allAnswers[randomAnwserIndex]
 
-
-
-            switch(randVal){
-                case 0:
-                    optionA.innerText = easyComputerQuestions[questionNumber].correct_answer;
-                    optionB.innerText = newArr[1];
-                    optionC.innerText =newArr[2];
-                    optionD.innerText =newArr[3];
-                    currentAnswer = 0;
-                    break;
-                case 1:
-                    optionB.innerText = easyComputerQuestions[questionNumber].correct_answer;
-                    optionA.innerText = newArr[0]; 
-                    optionC.innerText =newArr[2];
-                    optionD.innerText =newArr[3];
-                    currentAnswer = 1;
-                    break;
-                case 2:
-                    optionC.innerText = easyComputerQuestions[questionNumber].correct_answer;
-                    optionB.innerText = newArr[1];
-                    optionA.innerText =newArr[0]; 
-                    optionD.innerText =newArr[3];
-                    currentAnswer = 2;
-                    break;
-                case 3:
-                    optionB.innerText = newArr[1];
-                    optionC.innerText =newArr[2];
-                    optionA.innerText =newArr[0];   
-                    optionD.innerText = easyComputerQuestions[questionNumber].correct_answer;
-                    currentAnswer = 3;
-                    break;
-
-            }
+        const newOption = document.createElement("div");
+        const newText = document.createElement("p");
+        newText.innerText = randomAnwser;
+        newOption.setAttribute("class","option border");
+        answerContainer.append(newOption);
+        newOption.append(newText);
+      }
+           
         }else{
             scoreScreen();
         }
-        if(optionA.innerText === "undefined"){
-            optionA.classList.add("invisible");
-        }else{
-            optionA.classList.remove("invisible");
-        }
-        if(optionB.innerText === "undefined"){
-            optionB.classList.add("invisible");
-        }else{
-            optionB.classList.remove("invisible");            
-        }
-        if(optionC.innerText === "undefined"){
-            optionC.classList.add("invisible");
-        }else{
-            optionC.classList.remove("invisible");            
-        }
-        if(optionD.innerText === "undefined"){
-            optionD.classList.add("invisible");
-        }else{
-            optionD.classList.remove("invisible");
-            
-        }
+        
 
     }
 
 
     nextQuestion();
+
+    
 
     optionA.onclick = function (){
         console.log("clicka");
@@ -316,6 +276,7 @@ const easyComputerQuestions = [
         window.location.reload();
     }
     replayButton.onclick = restart;
+
     const indicateRight = function (){
         document.body.style.backgroundColor = "green";
         setTimeout(() => { document.body.style.backgroundColor = "white"; }, 500);
